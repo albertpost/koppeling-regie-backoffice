@@ -1,0 +1,7 @@
+# Response: Not Found
+NotFound:
+  description: Not found, the requested resource does not exist
+  content:
+    application/json:
+      schema:
+        $ref: ../schemas/error.yml#/Error

@@ -1,0 +1,7 @@
+# Response validation error
+ValidationError:
+  description: Validation error, the provided input data is not valid
+  content:
+    application/json:
+      schema:
+        $ref: ../schemas/error.yml#/Error

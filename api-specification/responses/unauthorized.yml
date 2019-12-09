@@ -1,0 +1,7 @@
+# Response Unauthorized
+Unauthorized:
+  description: Unauthorized, the authenticated user has insufficient privileges to access the requested resource
+  content:
+    application/json:
+      schema:
+        $ref: ../schemas/error.yml#/Error

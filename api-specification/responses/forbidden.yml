@@ -1,0 +1,7 @@
+# Response: Forbidden
+Forbidden:
+  description: Forbidden, the requested resource is not accessible
+  content:
+    application/json:
+      schema:
+        $ref: ../schemas/error.yml#/Error

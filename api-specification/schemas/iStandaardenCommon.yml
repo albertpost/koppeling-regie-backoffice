@@ -1,0 +1,165 @@
+openapi: '3.0.2'
+info:
+  title: Generieke componenten voor iStandaarden API's
+  version: '1.0'
+components:
+  schemas:
+    Regeling:
+      type: object
+      description: Type regeling
+      properties:
+        RegelingCode:
+          type: string
+        RegelingOmschrijving:
+          type: string
+      example:
+        RegelingCode: "01"
+        RegelingOmschrijving: Wmo
+
+    Beschikking:
+      type: object
+      description: "Beschikkingsrecord"
+      properties:
+        BeschikkingNummer:
+          type: string
+          description: iStandaarden beschikkingnummer
+        datumAfgifte:
+          type: string
+          format: yyyymmdd
+        datumBeschikking:
+          type: string
+          format: yyyymmdd
+        Toelichting:
+          type: string
+          format: base64
+        Product:
+          $ref: '#/components/schemas/Product'
+
+    Product:
+      type: object
+      description: "Omschrijving object"
+      properties:
+        ProductType:
+          $ref: '#/components/schemas/ProductType'
+        Productcategorie:
+          $ref: '#/components/schemas/Productcategorie'
+        datumIngangGeldigheid:
+          type: string
+        datumEindeGeldigheid:
+          type: string
+        Omvang:
+          $ref: '#/components/schemas/Omvang'
+        Aanbieder:
+          $ref: '#/components/schemas/Aanbieder'
+        Toelichting:
+          type: base64
+        Toewijzing:
+          $ref: '../api-specificatie.yml#/components/schemas/Toewijzing'
+
+    Omvang:
+      type: object
+      description: "Omschrijving object"
+      properties:
+        volume:
+          type: string
+        eenheid:
+          $ref: '#/components/schemas/Eenheid'
+        frequentie:
+          $ref: '#/components/schemas/Frequentie'
+
+    Eenheid:
+      type: object
+      description: "Omschrijving object"
+      properties:
+        EenheidCode:
+          type: string
+        EenheidOmschrijving:
+          type: string
+
+    Frequentie:
+      type: object
+      description: "Omschrijving object"
+      properties:
+        FrequentieCode:
+          type: string
+        FrequentieOmschrijving:
+          type: string
+
+    ProductType:
+      type: object
+      description: "Omschrijving object"
+      properties:
+        ProductCode:
+          type: string
+        ProductOmschrijving:
+          type: string
+
+    Productcategorie:
+      type: object
+      description: "Omschrijving object"
+      properties:
+        ProductcategorieCode:
+          type: string
+        ProductcategorieOmschrijving:
+          type: string
+
+###########################
+    Aanbieder:
+      type: object
+      description: "Omschrijving object"
+      properties:
+        AanbiederCode:
+          type: string
+          description: De aanbiedercode zoals bekend in de backofficeapplicatie
+        AanbiederOmschrijving:
+          type: string
+        AanbiederAGBCode:
+          type: string
+        AanbiederKvK:
+          type: string
+      example:
+        AanbiederCode: ""
+        AanbiederOmschrijving: "STICHTING INTERMEDICARE THUISZORG UTRECHT"
+        AanbiederAGBCode: "75751028"
+        AanbiederKvK: "30210230"
+
+    Levering:
+      type: object
+      description: "Omschrijving object (0 of 1)"
+      properties:
+        Begindatum:
+          type: string
+          format: yyyymmdd
+        Einddatum:
+          type: string
+          format: yyyymmdd
+        RedenBeeindiging:
+          $ref: '#/components/schemas/RedenBeeindiging'
+
+    RedenBeeindiging:
+      type: object
+      description: Codelijst WMO588 Reden beeindiging
+      properties:
+        RedenBeeindigingCode:
+          type: string
+          minLength: 2
+          maxLength: 2
+        RedenBeeindigingOmschrijving:
+          type: string
+      example:
+        RedenBeeindigingCode: "02"
+        RedenBeeindigingOmschrijving: Overlijden
+
+    RedenWijziging:
+      type: object
+      description: Codelijst WMO002 Reden wijziging toewijzing
+      properties:
+        RedenWijzigingCode:
+          type: string
+          minLength: 2
+          maxLength: 2
+        RedenWijzigingOmschrijving:
+          type: string
+      example:
+        RedenWijzigingCode: "03"
+        RedenWijzigingOmschrijving: Contractwijziging

@@ -1,0 +1,7 @@
+# Response Unavailable
+Unavailable:
+  description: Unavailable, the requested resource does not respond (in time)
+  content:
+    application/json:
+      schema:
+        $ref: ../schemas/error.yml#/Error

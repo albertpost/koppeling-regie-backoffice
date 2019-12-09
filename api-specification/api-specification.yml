@@ -1,0 +1,168 @@
+openapi: 3.0.2
+info:
+  version: 0.0.9
+  title: Regie-backoffice API
+  description: "Een open standaard om gegevensuitwisseling tussen regiesystemen en backofficeapplicaties mogelijk te maken.
+  Vanuit gemeenten is er behoefte om gegevens tussen regie- en backofficeapplicaties uit te wisselen.
+  Omdat hier geen standaard voor is vanuit VNG-Realisatie of het Zorginstituut hebben enkele leveranciers (ZorgNed, Solviteers Software) hier zelf het initiatief toe genomen."
+
+servers:
+  - url: https://{environment}.example.com/project-name/api/v1
+    description: Testomgeving
+    variables:
+      environment:
+        enum:
+          - testen
+          - acceptatie
+        default: testen
+
+#externalDocs:
+#  url: 'https://redmine.solviteers.nl:8443/redmine/projects/wizportaal/wiki/Koppelingen'
+#  description: Link to redmine project page
+
+paths:
+  /gemeente/{gemeentecode}/klantbeeld:
+    get:
+      summary: Geeft het klantbeeld van een persoon terug
+      tags:
+        - klantbeeld
+      parameters:
+        - in: path
+          name: gemeentecode
+          description: CBS gemeentecode
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: bsn
+          description: burgerservicenummer
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: regeling
+        - in: query
+          name: maxeinddatum
+        - in: query
+          name: sort
+      responses:
+        '200':
+          description: Een collectie aanvragen met beschikkingen en producten
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Aanvraag'
+
+  /gemeente/{gemeentecode}/toewijzingen/{ToewijzingNummer}:
+    get:
+      summary: Geeft de details van de toewijzing terug
+      tags:
+        - toewijzingen
+      parameters:
+        - in: path
+          name: gemeentecode
+          description: CBS gemeentecode
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: ToewijzingNummer
+          description: iStandaarden ToewijzingNummer
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: bsn
+          description: burgerservicenummer
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: sort
+      responses:
+        '200':
+          description: Een collectie aanvragen met beschikkingen en producten
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Toewijzing'
+
+  /gemeente/{gemeentecode}/toewijzingen:
+    get:
+      summary: Geeft de details van de toewijzing terug op basis van een beschikking
+      tags:
+        - toewijzingen
+      parameters:
+        - in: path
+          name: gemeentecode
+          description: CBS gemeentecode
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: BeschikkingNummer
+          description: iStandaarden BeschikkingNummer
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: bsn
+          description: burgerservicenummer
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: sort
+      responses:
+        '200':
+          description: Een collectie aanvragen met beschikkingen en producten
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Toewijzing'
+
+  /codetabellen/regelingen:
+    get:
+      summary: Geeft de beschikbare regelingen terug
+      tags:
+        - codetabellen
+      description: \@todo
+
+components:
+  schemas:
+    Aanvraag:
+      type: object
+      description: "Een klantvraag die leidt tot een traject met formele of informele ondersteuning"
+      properties:
+        regeling:
+          $ref: './schemas/iStandaardenCommon.yml#/components/schemas/Regeling'
+        datumAanmelding:
+          type: string
+          format: yyyymmdd
+        datumAanvraag:
+          type: string
+          format: yyyymmdd
+        beschikking:
+          $ref: './schemas/iStandaardenCommon.yml#/components/schemas/Beschikking'
+
+    Toewijzing:
+      type: object
+      description: "Omschrijving object"
+      properties:
+        Toewijzingnummer:
+          type: string
+        ToewijzingIngangsdatum:
+          type: string
+        ToewijzingEinddatum:
+          type: string
+        Aanbieder:
+          $ref: './schemas/iStandaardenCommon.yml#/components/schemas/Aanbieder'
+        ReferentieAanbieder:
+          type: string
+          maxLength: 36
+        RedenWijziging:
+          $ref: './schemas/iStandaardenCommon.yml#/components/schemas/RedenWijziging'
+        Levering:
+          $ref: './schemas/iStandaardenCommon.yml#/components/schemas/Levering'
+
+
