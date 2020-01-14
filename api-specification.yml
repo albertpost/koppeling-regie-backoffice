@@ -21,7 +21,7 @@ servers:
 #  description: Link to redmine project page
 
 paths:
-  /gemeente/{gemeentecode}/klantbeeld:
+  /gemeenten/{gemeentecode}/personen/{burgerservicenummer}/aanvragen:
     get:
       summary: Geeft het klantbeeld van een persoon terug
       tags:
@@ -33,8 +33,8 @@ paths:
           required: true
           schema:
             type: string
-        - in: header
-          name: bsn
+        - in: path
+          name: burgerservicenummer
           description: burgerservicenummer
           required: true
           schema:
@@ -49,11 +49,45 @@ paths:
         '200':
           description: Een collectie aanvragen met beschikkingen en producten
           content:
-            application/json:
+            application/hal+json:
               schema:
-                $ref: '#/components/schemas/Aanvraag'
+                $ref: '#/components/schemas/aanvraag'
 
-  /gemeente/{gemeentecode}/toewijzingen/{ToewijzingNummer}:
+  /gemeenten/{gemeentecode}/personen/{burgerservicenummer}/toewijzingen:
+    get:
+      summary: Geeft de details van de toewijzing terug op basis van een beschikking
+      tags:
+        - toewijzingen
+      parameters:
+        - in: path
+          name: gemeentecode
+          description: CBS gemeentecode
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: burgerservicenummer
+          description: burgerservicenummer
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: beschikkingNummer
+          description: iStandaarden BeschikkingNummer
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: sort
+      responses:
+        '200':
+          description: Een collectie aanvragen met beschikkingen en producten
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/toewijzing'
+
+  /gemeenten/{gemeentecode}/personen/{burgerservicenummer}/toewijzingen/{toewijzingNummer}:
     get:
       summary: Geeft de details van de toewijzing terug
       tags:
@@ -66,60 +100,26 @@ paths:
           schema:
             type: string
         - in: path
-          name: ToewijzingNummer
+          name: burgerservicenummer
+          description: burgerservicenummer
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: toewijzingNummer
           description: iStandaarden ToewijzingNummer
           required: true
           schema:
             type: string
-        - in: header
-          name: bsn
-          description: burgerservicenummer
-          required: true
-          schema:
-            type: string
         - in: query
           name: sort
       responses:
         '200':
           description: Een collectie aanvragen met beschikkingen en producten
           content:
-            application/json:
+            application/hal+json:
               schema:
-                $ref: '#/components/schemas/Toewijzing'
-
-  /gemeente/{gemeentecode}/toewijzingen:
-    get:
-      summary: Geeft de details van de toewijzing terug op basis van een beschikking
-      tags:
-        - toewijzingen
-      parameters:
-        - in: path
-          name: gemeentecode
-          description: CBS gemeentecode
-          required: true
-          schema:
-            type: string
-        - in: query
-          name: BeschikkingNummer
-          description: iStandaarden BeschikkingNummer
-          required: true
-          schema:
-            type: string
-        - in: header
-          name: bsn
-          description: burgerservicenummer
-          required: true
-          schema:
-            type: string
-        - in: query
-          name: sort
-      responses:
-        '200':
-          description: Een collectie aanvragen met beschikkingen en producten
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Toewijzing'
+                $ref: '#/components/schemas/toewijzing'
 
   /codetabellen/regelingen:
     get:
@@ -130,39 +130,282 @@ paths:
 
 components:
   schemas:
-    Aanvraag:
+    aanvraag:
       type: object
       description: "Een klantvraag die leidt tot een traject met formele of informele ondersteuning"
       properties:
+        sleutel:
+          type: integer
+          format: int32
         regeling:
-          $ref: './schemas/iStandaardenCommon.yml#/components/schemas/Regeling'
+          $ref: '#/components/schemas/regeling'
         datumAanmelding:
           type: string
-          format: yyyymmdd
+          format: date
         datumAanvraag:
           type: string
-          format: yyyymmdd
+          format: date
         beschikking:
-          $ref: './schemas/iStandaardenCommon.yml#/components/schemas/Beschikking'
+          $ref: '#/components/schemas/beschikking'
+      required:
+        - sleutel
+        - regeling
+        - datumAanmelding
+        - datumAanvraag
 
-    Toewijzing:
+    regeling:
       type: object
       description: "Omschrijving object"
       properties:
-        Toewijzingnummer:
+        sleutel:
+          type: integer
+          format: int32
+        omschrijving:
           type: string
-        ToewijzingIngangsdatum:
+      required:
+        - sleutel
+        - omschrijving
+
+    beschikking:
+      type: object
+      description: "Omschrijving object"
+      properties:
+        beschikkingNummer:
+          type: integer
+          format: int32
+        datumAfgifte:
           type: string
-        ToewijzingEinddatum:
+          format: date
+        toelichting:
           type: string
-        Aanbieder:
-          $ref: './schemas/iStandaardenCommon.yml#/components/schemas/Aanbieder'
-        ReferentieAanbieder:
+        beschikteProducten:
+          type: array
+          items: 
+            $ref: '#/components/schemas/beschikteProduct'            
+        afgewezenProducten:
+          type: array
+          items: 
+            $ref: '#/components/schemas/afgewezenProduct'  
+      required:
+        - beschikkingNummer
+        - datumAfgifte
+
+    afgewezenProduct:
+      type: object
+      description: "Omschrijving object"
+      properties:
+        sleutel:
+          type: integer
+          format: int32
+        product:
+          $ref: '#/components/schemas/product'
+        productCategorie:
+          $ref: '#/components/schemas/productCategorie'
+      required:
+        - sleutel
+        - product
+
+    beschikteProduct:
+      type: object
+      description: "Omschrijving object"
+      properties:
+        sleutel:
+          type: integer
+          format: int32
+        product:
+          $ref: '#/components/schemas/product'
+        productCategorie:
+          $ref: '#/components/schemas/productCategorie'
+        datumIngangGeldigheid:
+          type: string
+          format: date
+        datumEindeGeldigheid:
+          type: string
+          format: date
+        omvang:
+           $ref: '#/components/schemas/omvang'
+        leveringsvorm:
+          type: string
+        leverancier:
+          $ref: '#/components/schemas/leverancier'
+        toelichting:
+          type: string
+        toewijzing:
+          $ref: '#/components/schemas/toewijzing'
+      required:
+        - sleutel
+        - product
+        - datumIngangGeldigheid
+        - omvang
+
+    toewijzing:
+      type: object
+      description: "Omschrijving object"
+      properties:
+        toewijzingNummer:
+          type: integer
+          format: int32
+        toewijzingsDatumTijd:
+          type: string
+          format: date-time
+        toewijzingIngangsdatum:
+          type: string
+          format: date
+        toewijzingEinddatum:
+          type: string
+          format: date
+        leverancier:
+          $ref: '#/components/schemas/leverancier'
+        referentieAanbieder:
           type: string
           maxLength: 36
-        RedenWijziging:
-          $ref: './schemas/iStandaardenCommon.yml#/components/schemas/RedenWijziging'
-        Levering:
-          $ref: './schemas/iStandaardenCommon.yml#/components/schemas/Levering'
+        redenWijziging:
+          type: string
+          minLength: 2
+          maxLength: 2
+        levering:
+          type: array
+          items: 
+            $ref: '#/components/schemas/levering'
+      required:
+        - toewijzingNummer
+        - toewijzingsDatumTijd
+        - toewijzingIngangsdatum
+        - leverancier
 
+    product:
+      type: object
+      description: "Omschrijving object"
+      properties:
+        sleutel:
+          type: integer
+          format: int32
+        productCode:
+          type: string
+          minLength: 1
+          maxLength: 5
+        omschrijving:
+          type: string
+      required:
+        - sleutel
+        - omschrijving
 
+    productCategorie:
+      type: object
+      description: "Omschrijving object"
+      properties:
+        code:
+          type: string
+          minLength: 2
+          maxLength: 2
+        omschrijving:
+          type: string
+      required:
+        - code
+        - omschrijving
+
+    omvang:
+      type: object
+      description: "Omschrijving object"
+      properties:
+        volume:
+          type: integer
+          format: int32
+        eenheid:
+          $ref: '#/components/schemas/eenheid'
+        frequentie:
+          $ref: '#/components/schemas/frequentie'
+      required:
+        - volume
+        - eenheid
+        - frequentie
+
+    eenheid:
+      type: object
+      description: "Omschrijving object"
+      properties:
+        code:
+          type: string
+          minLength: 2
+          maxLength: 2
+        omschrijving:
+          type: string
+      required:
+        - code
+        - omschrijving
+
+    frequentie:
+      type: object
+      description: "Omschrijving object"
+      properties:
+        code:
+          type: string
+          minLength: 1
+          maxLength: 1
+        omschrijving:
+          type: string
+      required:
+        - code
+        - omschrijving
+
+    leverancier:
+      type: object
+      description: "Omschrijving object"
+      properties:
+        sleutel:
+          type: integer
+          format: int32
+        agbcode:
+          type: string
+          minLength: 8
+          maxLength: 8
+        kvk:
+          type: string
+        omschrijving:
+          type: string
+      required:
+      - sleutel
+      - omschrijving      
+      
+    levering:
+      type: object
+      description: "Omschrijving object"
+      properties:
+        begindatum:
+          type: string
+          format: date
+        einddatum:
+          type: string
+          format: date
+        redenBeeindiging:
+          $ref: '#/components/schemas/redenBeeindiging'
+      required:
+      - begindatum
+
+    redenBeeindiging:
+      type: object
+      description: "Omschrijving object"
+      properties:
+        code:
+          type: string
+          minLength: 2
+          maxLength: 2
+        omschrijving:
+          type: string
+      required:
+        - code
+        - omschrijving
+
+    redenWijziging:
+      type: object
+      description: "Omschrijving object"
+      properties:
+        code:
+          type: string
+          minLength: 2
+          maxLength: 2
+        omschrijving:
+          type: string
+      required:
+        - code
+        - omschrijving
