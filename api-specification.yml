@@ -27,18 +27,8 @@ paths:
       tags:
         - klantbeeld
       parameters:
-        - in: path
-          name: gemeentecode
-          description: CBS gemeentecode
-          required: true
-          schema:
-            type: string
-        - in: path
-          name: burgerservicenummer
-          description: burgerservicenummer
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/gemeentecode'
+        - $ref: '#/components/parameters/burgerservicenummer'
         - in: query
           name: regeling
         - in: query
@@ -59,18 +49,8 @@ paths:
       tags:
         - toewijzingen
       parameters:
-        - in: path
-          name: gemeentecode
-          description: CBS gemeentecode
-          required: true
-          schema:
-            type: string
-        - in: path
-          name: burgerservicenummer
-          description: burgerservicenummer
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/gemeentecode'
+        - $ref: '#/components/parameters/burgerservicenummer'
         - in: query
           name: beschikkingNummer
           description: iStandaarden BeschikkingNummer
@@ -93,18 +73,8 @@ paths:
       tags:
         - toewijzingen
       parameters:
-        - in: path
-          name: gemeentecode
-          description: CBS gemeentecode
-          required: true
-          schema:
-            type: string
-        - in: path
-          name: burgerservicenummer
-          description: burgerservicenummer
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/gemeentecode'
+        - $ref: '#/components/parameters/burgerservicenummer'
         - in: path
           name: toewijzingNummer
           description: iStandaarden ToewijzingNummer
@@ -121,15 +91,53 @@ paths:
               schema:
                 $ref: '#/components/schemas/toewijzing'
 
-  /codetabellen/regelingen:
+  /codetabellen/{codetabel}:
     get:
-      summary: Geeft de beschikbare regelingen terug
+      summary: Geeft de beschikbare collectie van de codetabel terug
       tags:
         - codetabellen
-      description: \@todo
+      description: Het opvragen van een collectie van een bepaalde codetabel, bijvoorbeeld productCategorie.
+      parameters:
+        - in: path
+          name: codetabel
+          required: true
+          schema:
+            type: string
+            enum: [productCategorie, eenheid, frequentie, redenBeeindiging, redenWijziging]
+      responses:
+        '200':
+          description: Een collectie van de gevraagde codetabel
 
 components:
+  parameters:
+    gemeentecode:
+      in: path
+      name: gemeentecode
+      description: CBS gemeentecode
+      required: true      
+      schema: 
+        type: string
+        minLength: 4
+        maxLengte: 4
+    burgerservicenummer:
+      name: burgerservicenummer
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/burgerservicenummer'
   schemas:
+    burgerservicenummer:
+        type: "string"
+        title: "Burgerservicenummer"
+        description: "Het burgerservicenummer, bedoeld in artikel 1.1 van de Wet\
+          \ algemene bepalingen burgerservicenummer. Alle nummers waarvoor geldt\
+          \ dat, indien aangeduid als (s0 s1 s2 s3 s4 s5 s6 s7 s8), het resultaat\
+          \ van (9*s0) + (8*s1) + (7*s2) +...+ (2*s7) - (1*s8) deelbaar is door\
+          \ elf. Er moeten dus 9 cijfers aanwezig zijn."
+        pattern: "^[0-9]*$"
+        maxLength: 9
+        minLength: 9
+        example: "555555021"
     aanvraag:
       type: object
       description: "Een klantvraag die leidt tot een traject met formele of informele ondersteuning"
