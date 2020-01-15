@@ -115,10 +115,8 @@ components:
       name: gemeentecode
       description: CBS gemeentecode
       required: true      
-      schema: 
-        type: string
-        minLength: 4
-        maxLengte: 4
+      schema:
+        $ref: '#/components/schemas/gemeentecode'
     burgerservicenummer:
       name: burgerservicenummer
       in: path
@@ -126,6 +124,14 @@ components:
       schema:
         $ref: '#/components/schemas/burgerservicenummer'
   schemas:
+    gemeentecode:
+        type: "string"
+        title: "gemeentecode"
+        description: "De CBS gemeentecode, Er moeten 4 cijfers aanwezig zijn."
+        pattern: "^[0-9]*$"
+        maxLength: 4
+        minLength: 4
+        example: "0216"
     burgerservicenummer:
         type: "string"
         title: "Burgerservicenummer"
