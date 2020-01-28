@@ -118,22 +118,6 @@ components:
       schema:
         $ref: '#/components/schemas/burgerservicenummer'
   schemas:
-    halLink:
-      description: De Link Object zoals gespecificeerd in https://tools.ietf.org/html/draft-kelly-json-hal-08#section-5
-      type: object
-      required:
-        - href
-      properties:
-        href:
-          $ref: "#/components/schemas/Href"
-        title:
-         description: "Voor mens leesbaar label bij de link"
-         type: string
-    halCollectionLinks:
-      type: object
-      properties:
-        self:
-          $ref: "#/components/schemas/halLink"
     gemeentecode:
       type: "string"
       title: "gemeentecode"
@@ -188,7 +172,7 @@ components:
       type: object
       properties:
         _links:
-          $ref: "#/components/schemas/halCollectionLinks"
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/schemas/halCollectionLinks"
         _embedded:
           type: object
           properties:
@@ -323,7 +307,7 @@ components:
       type: object
       properties:
         _links:
-          $ref: "#/components/schemas/halCollectionLinks"
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/schemas/halCollectionLinks"
         _embedded:
           type: object
           properties:
@@ -472,9 +456,9 @@ components:
       type: object
       properties:
         self:
-          $ref: "#/components/schemas/halLink"
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/schemas/halLink"
     toewijzing_links:
       type: object
       properties:
         self:
-          $ref: "#/components/schemas/halLink"
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/schemas/halLink"
