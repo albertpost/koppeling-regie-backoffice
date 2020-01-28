@@ -40,6 +40,31 @@ paths:
             application/hal+json:
               schema:
                 $ref: '#/components/schemas/aanvraagHalCollectie'
+        '400':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/400"
+        '401':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/401"
+        '403':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/403"
+        '406':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/406"
+        '409':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/409"
+        '410':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/410"
+        '415':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/415"
+        '429':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/429"
+        '500':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/500"
+        '501':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/501"
+        '503':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/503"
+        'default':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/default"
+      
 
   /gemeenten/{gemeentecode}/ingeschrevenpersonen/{burgerservicenummer}/toewijzingen:
     get:
@@ -62,6 +87,30 @@ paths:
             application/hal+json:
               schema:
                 $ref: '#/components/schemas/toewijzingHalCollectie'
+        '400':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/400"
+        '401':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/401"
+        '403':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/403"
+        '406':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/406"
+        '409':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/409"
+        '410':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/410"
+        '415':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/415"
+        '429':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/429"
+        '500':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/500"
+        '501':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/501"
+        '503':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/503"
+        'default':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/default"
 
   /gemeenten/{gemeentecode}/ingeschrevenpersonen/{burgerservicenummer}/toewijzingen/{toewijzingNummer}:
     get:
@@ -84,6 +133,30 @@ paths:
             application/hal+json:
               schema:
                 $ref: '#/components/schemas/toewijzingHal'
+        '400':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/400"
+        '401':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/401"
+        '403':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/403"
+        '406':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/406"
+        '409':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/409"
+        '410':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/410"
+        '415':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/415"
+        '429':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/429"
+        '500':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/500"
+        '501':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/501"
+        '503':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/503"
+        'default':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/default"
 
   /codetabellen/{codetabel}:
     get:
@@ -101,6 +174,30 @@ paths:
       responses:
         '200':
           description: Een collectie van de gevraagde codetabel
+        '400':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/400"
+        '401':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/401"
+        '403':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/403"
+        '406':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/406"
+        '409':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/409"
+        '410':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/410"
+        '415':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/415"
+        '429':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/429"
+        '500':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/500"
+        '501':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/501"
+        '503':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/503"
+        'default':
+          $ref: "https://raw.githubusercontent.com/solviteers/api-specificatie/master/common.yaml#/components/responses/default"
 
 components:
   parameters:
