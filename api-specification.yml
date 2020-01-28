@@ -39,7 +39,7 @@ paths:
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/aanvraag'
+                $ref: '#/components/schemas/aanvraagHalCollectie'
 
   /gemeenten/{gemeentecode}/ingeschrevenpersonen/{burgerservicenummer}/toewijzingen:
     get:
@@ -61,7 +61,7 @@ paths:
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/toewijzing'
+                $ref: '#/components/schemas/toewijzingHalCollectie'
 
   /gemeenten/{gemeentecode}/ingeschrevenpersonen/{burgerservicenummer}/toewijzingen/{toewijzingNummer}:
     get:
@@ -83,7 +83,7 @@ paths:
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/toewijzing'
+                $ref: '#/components/schemas/toewijzingHal'
 
   /codetabellen/{codetabel}:
     get:
