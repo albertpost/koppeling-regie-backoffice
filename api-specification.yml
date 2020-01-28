@@ -21,7 +21,7 @@ servers:
 #  description: Link to redmine project page
 
 paths:
-  /gemeenten/{gemeentecode}/personen/{burgerservicenummer}/aanvragen:
+  /gemeenten/{gemeentecode}/ingeschrevenpersonen/{burgerservicenummer}/aanvragen:
     get:
       summary: Geeft het klantbeeld van een persoon terug
       tags:
@@ -41,7 +41,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/aanvraag'
 
-  /gemeenten/{gemeentecode}/personen/{burgerservicenummer}/toewijzingen:
+  /gemeenten/{gemeentecode}/ingeschrevenpersonen/{burgerservicenummer}/toewijzingen:
     get:
       summary: Geeft de details van de toewijzing terug op basis van een beschikking
       tags:
@@ -63,7 +63,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/toewijzing'
 
-  /gemeenten/{gemeentecode}/personen/{burgerservicenummer}/toewijzingen/{toewijzingNummer}:
+  /gemeenten/{gemeentecode}/ingeschrevenpersonen/{burgerservicenummer}/toewijzingen/{toewijzingNummer}:
     get:
       summary: Geeft de details van de toewijzing terug
       tags:
@@ -118,6 +118,22 @@ components:
       schema:
         $ref: '#/components/schemas/burgerservicenummer'
   schemas:
+    halLink:
+      description: De Link Object zoals gespecificeerd in https://tools.ietf.org/html/draft-kelly-json-hal-08#section-5
+      type: object
+      required:
+        - href
+      properties:
+        href:
+          $ref: "#/components/schemas/Href"
+        title:
+         description: "Voor mens leesbaar label bij de link"
+         type: string
+    halCollectionLinks:
+      type: object
+      properties:
+        self:
+          $ref: "#/components/schemas/halLink"
     gemeentecode:
       type: "string"
       title: "gemeentecode"
@@ -140,6 +156,7 @@ components:
       example: "555555021"
     identificatie:
       type: string
+
     aanvraag:
       type: object
       description: "Een klantvraag die leidt tot een traject met formele of informele ondersteuning"
@@ -161,6 +178,24 @@ components:
         - regeling
         - datumAanmelding
         - datumAanvraag
+    aanvraagHal:
+      allOf:
+        - $ref: '#/components/schemas/aanvraag'
+        - properties:
+            _links:
+              $ref: "#/components/schemas/aanvraag_links"
+    aanvraagHalCollectie:
+      type: object
+      properties:
+        _links:
+          $ref: "#/components/schemas/halCollectionLinks"
+        _embedded:
+          type: object
+          properties:
+            aanvraag:
+              type: array
+              items:
+                $ref: '#/components/schemas/aanvraagHal'
 
     regeling:
       type: object
@@ -278,6 +313,24 @@ components:
         - toewijzingsDatumTijd
         - toewijzingIngangsdatum
         - leverancier
+    toewijzingHal:
+      allOf:
+        - $ref: '#/components/schemas/toewijzing'
+        - properties:
+            _links:
+              $ref: "#/components/schemas/toewijzing_links"              
+    toewijzingHalCollectie:
+      type: object
+      properties:
+        _links:
+          $ref: "#/components/schemas/halCollectionLinks"
+        _embedded:
+          type: object
+          properties:
+            aanvraag:
+              type: array
+              items:
+                $ref: '#/components/schemas/toewijzingHal'
 
     product:
       type: object
@@ -413,3 +466,15 @@ components:
       required:
         - code
         - omschrijving
+
+#Links:
+    aanvraag_links:
+      type: object
+      properties:
+        self:
+          $ref: "#/components/schemas/halLink"
+    toewijzing_links:
+      type: object
+      properties:
+        self:
+          $ref: "#/components/schemas/halLink"
