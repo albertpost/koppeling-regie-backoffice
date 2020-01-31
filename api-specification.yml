@@ -170,7 +170,13 @@ paths:
           required: true
           schema:
             type: string
-            enum: [productCategorie, eenheid, frequentie, redenBeeindiging, redenWijziging]
+            enum:
+              - productCategorie
+              - eenheid
+              - frequentie
+              - redenBeeindiging
+              - redenWijziging
+              - regeling
       responses:
         '200':
           description: Een collectie van de gevraagde codetabel
@@ -205,7 +211,7 @@ components:
       in: path
       name: gemeentecode
       description: CBS gemeentecode
-      required: true      
+      required: true
       schema:
         $ref: '#/components/schemas/gemeentecode'
     burgerservicenummer:
@@ -304,12 +310,12 @@ components:
           type: string
         beschikteProducten:
           type: array
-          items: 
-            $ref: '#/components/schemas/beschikteProduct'            
+          items:
+            $ref: '#/components/schemas/beschikteProduct'
         afgewezenProducten:
           type: array
-          items: 
-            $ref: '#/components/schemas/afgewezenProduct'  
+          items:
+            $ref: '#/components/schemas/afgewezenProduct'
       required:
         - beschikkingNummer
         - datumAfgifte
@@ -348,6 +354,9 @@ components:
            $ref: '#/components/schemas/omvang'
         leveringsvorm:
           type: string
+          enum:
+            - zin  # zorg in natura
+            - pgb  # persoonsgebonden budget
         leverancier:
           $ref: '#/components/schemas/leverancier'
         toelichting:
@@ -370,10 +379,10 @@ components:
         toewijzingsDatumTijd:
           type: string
           format: date-time
-        toewijzingIngangsdatum:
+        ingangsdatum:
           type: string
           format: date
-        toewijzingEinddatum:
+        einddatum:
           type: string
           format: date
         leverancier:
@@ -382,24 +391,22 @@ components:
           type: string
           maxLength: 36
         redenWijziging:
-          type: string
-          minLength: 2
-          maxLength: 2
+          $ref: '#/components/schemas/redenWijziging'
         levering:
           type: array
-          items: 
+          items:
             $ref: '#/components/schemas/levering'
       required:
         - toewijzingNummer
         - toewijzingsDatumTijd
-        - toewijzingIngangsdatum
+        - ingangsdatum
         - leverancier
     toewijzingHal:
       allOf:
         - $ref: '#/components/schemas/toewijzing'
         - properties:
             _links:
-              $ref: "#/components/schemas/toewijzing_links"              
+              $ref: "#/components/schemas/toewijzing_links"
     toewijzingHalCollectie:
       type: object
       properties:
@@ -419,7 +426,7 @@ components:
       properties:
         identificatie:
           $ref: '#/components/schemas/identificatie'
-        productCode:
+        productCode: # De productcode in het iWmo- en iJw-berichtenverkeer.
           type: string
           minLength: 1
           maxLength: 5
@@ -493,18 +500,18 @@ components:
       properties:
         identificatie:
           $ref: '#/components/schemas/identificatie'
-        agbcode:
+        agbcode: # De AGB-code (Algemeen GegevensBeheer) is een codenummer in een register van zorgverleners of zorgverleningsinstanties.
           type: string
           minLength: 8
           maxLength: 8
-        kvk:
+        kvk: # Het KVK-nummer (Kamer van Koophandel) is het nummer van een bedrijf in het Handelsregister.
           type: string
         omschrijving:
           type: string
       required:
       - identificatie
-      - omschrijving      
-      
+      - omschrijving
+
     levering:
       type: object
       description: "Omschrijving object"
