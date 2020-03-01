@@ -4,8 +4,8 @@ Een open standaard om gegevensuitwisseling tussen regiesystemen en backofficeapp
 
 Functionaliteit die met deze API mogelijk gemaakt wordt:
 * Raadplegen aanvragen in de backoffice
-** Hiermee kan een klantbeeld samengesteld worden
-** De vraag naar de backoffice kan gefilterd worden op basis van _regeling_ en _maximale einddatum_ van het toegewezen product
+  * Hiermee kan een klantbeeld samengesteld worden
+  * De vraag naar de backoffice kan gefilterd worden op basis van _regeling_ en _maximale einddatum_ van het toegewezen product
 * Opvragen van toewijzingen in de backoffice
 * Opvragen details van een specifieke toewijzing
 
