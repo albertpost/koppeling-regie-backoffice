@@ -1,9 +1,13 @@
 # Open API Koppeling Regie - Backoffice
 
-The Open Api Specification 3.0 (OAS3, previous versions also know as swagger 2.0) of the API in this project is located in this `api-specification` folder.
+Een open standaard om gegevensuitwisseling tussen regiesystemen en backofficeapplicaties mogelijk te maken. Vanuit gemeenten is er behoefte om gegevens tussen regie- en backofficeapplicaties uit te wisselen. Omdat hier geen standaard voor is vanuit VNG-Realisatie of het Zorginstituut hebben enkele leveranciers (ZorgNed, Solviteers Software) hier zelf het initiatief toe genomen.
 
-The API as specificied in this folder contains the requirements for the API in this project.
-Read more about [our API-principles][API guidelines and principles].
+Functionaliteit die met deze API mogelijk gemaakt wordt:
+* Raadplegen aanvragen in de backoffice
+** Hiermee kan een klantbeeld samengesteld worden
+** De vraag naar de backoffice kan gefilterd worden op basis van _regeling_ en _maximale einddatum_ van het toegewezen product
+* Opvragen van toewijzingen in de backoffice
+* Opvragen details van een specifieke toewijzing
 
 # Getting started
 
