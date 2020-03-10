@@ -396,7 +396,7 @@ components:
         _embedded:
           type: object
           properties:
-            toegewezenProducten:
+            toewijzingen:
               type: array
               items:
                 $ref: '#/components/schemas/toewijzingHal'
