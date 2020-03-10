@@ -15,10 +15,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/gemeentecode'
         - $ref: '#/components/parameters/burgerservicenummer'
-        - in: query
-          name: regeling
-        - in: query
-          name: maxeinddatum
+        - $ref: '#/components/parameters/regeling'
+        - $ref: '#/components/parameters/maxeinddatum'
       security:
       - ApiKeyAuth: []
       responses:
@@ -63,11 +61,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/gemeentecode'
         - $ref: '#/components/parameters/burgerservicenummer'
-        - in: query
-          name: regeling
-        - in: query
-          name: maxeinddatum
-          description: Toegewezen producten mogen geen einddatum hebben ouder dan deze datum. Verwijst naar ToegewezenProduct.Einddatum
+        - $ref: '#/components/parameters/regeling'
+        - $ref: '#/components/parameters/maxeinddatum'
       security:
       - ApiKeyAuth: []
       responses:
@@ -211,6 +206,18 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/burgerservicenummer'
+    regeling:
+      name: regeling
+      in: query
+      schema:
+        type: string
+    maxeinddatum:
+      name: maxeinddatum
+      in: query
+      schema:
+        type: string
+        format: date
+      description: Toegewezen producten mogen geen einddatum hebben ouder dan deze datum. Verwijst naar ToegewezenProduct.Einddatum
   schemas:
     gemeentecode:
       type: "string"
