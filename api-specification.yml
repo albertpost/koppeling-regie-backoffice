@@ -357,8 +357,10 @@ components:
           $ref: '#/components/schemas/leverancier'
         toelichting:
           type: string
-        toewijzing:
-          $ref: '#/components/schemas/toewijzing'
+        toewijzingen:
+          type: array
+          items:
+            $ref: '#/components/schemas/toewijzing'
       required:
         - identificatie
         - product
@@ -388,7 +390,7 @@ components:
           maxLength: 36
         redenWijziging:
           $ref: '#/components/schemas/redenWijziging'
-        levering:
+        leveringen:
           type: array
           items:
             $ref: '#/components/schemas/levering'
