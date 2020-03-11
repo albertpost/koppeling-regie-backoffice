@@ -158,6 +158,9 @@ paths:
           schema:
             type: string
             enum:
+              - eenheid
+              - frequentie
+              - productCategorie
               - redenBeeindiging
               - redenWijziging
               - regeling
